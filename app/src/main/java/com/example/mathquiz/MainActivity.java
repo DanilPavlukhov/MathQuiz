@@ -2,13 +2,16 @@ package com.example.mathquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity{
 
     TextView problem;
     TextView text1;
@@ -26,11 +29,14 @@ public class MainActivity extends Activity {
 
     }
     private void setupUI(){
-
+        MyClicker myClicker =new  MyClicker();
         problem = findViewById(R.id.problem);
         text1 = findViewById(R.id.text1);
+        text1.setOnClickListener(myClicker);
         text2 = findViewById(R.id.text2);
+        text2.setOnClickListener(myClicker);
         text3 = findViewById(R.id.text3);
+        text3.setOnClickListener(myClicker);
 
     }
     private void generateAnswers(){
@@ -50,6 +56,19 @@ public class MainActivity extends Activity {
             text1.setText(generator.getNoiseResult());
             text2.setText(generator.getNoiseResult());
             text3.setText(generator.getResult());
+        }
+    }
+
+    public class MyClicker implements View.OnClickListener {
+        @SuppressLint("ResourceAsColor")
+        @Override
+        public void onClick(View v) {
+            TextView tw = (TextView) v;
+            String str  = tw.getText().toString();
+            if(str.equals(generator.getResult())) {
+                v.setBackgroundColor(R.color.teal_700);
+            } else
+                v.setBackgroundColor(R.color.red);
         }
     }
 
